@@ -8,12 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-let jokeElement = document.getElementById("joke");
-const jokeBtn = document.getElementById("jokeBtn");
-jokeBtn === null || jokeBtn === void 0 ? void 0 : jokeBtn.addEventListener("click", generateJoke);
-generateJoke();
+let jokeElement;
+let joke;
 function generateJoke() {
-    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const config = {
             headers: {
@@ -22,10 +19,49 @@ function generateJoke() {
         };
         const res = yield fetch('https://icanhazdadjoke.com/', config);
         const data = yield res.json();
-        jokeElement = data.joke;
-        jokeElement = (_a = document.getElementById("joke")) === null || _a === void 0 ? void 0 : _a.innerHTML;
+        jokeElement = document.getElementById("joke");
+        jokeElement.innerHTML = data.joke;
+        joke = data.joke;
         console.log(data.joke);
+        return data.joke;
     });
+}
+let reportAcudits = [];
+const d = new Date();
+let date = d.toISOString().split('T')[0];
+class Joke {
+    constructor(joke, score, date) {
+        this.joke = joke;
+        this.score = score;
+        this.date = date;
+        return { joke, score, date };
+    }
+}
+let score = "0";
+let newJoke = new Joke(joke, score, date);
+function loadScore(rang) {
+    if (rang === 1) {
+        score = "1";
+        newJoke = new Joke(joke, score, date);
+        reportAcudits.push(newJoke);
+        generateJoke();
+        console.log(reportAcudits);
+    }
+    if (rang === 2) {
+        score = "2";
+        newJoke = new Joke(joke, score, date);
+        reportAcudits.push(newJoke);
+        generateJoke();
+        console.log(reportAcudits);
+    }
+    if (rang === 3) {
+        score = "3";
+        newJoke = new Joke(joke, score, date);
+        reportAcudits.push(newJoke);
+        generateJoke();
+        console.log(reportAcudits);
+    }
+    return score;
 }
 /*let url = 'https://icanhazdadjoke.com/slack';
 fetch(url)

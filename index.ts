@@ -39,28 +39,60 @@ function loadScore(rang:number){
         score = "1";
         newJoke = new Joke(joke, score, date);
         reportAcudits.push(newJoke);
-        generateJoke();
+        randomJoke();
         console.log(reportAcudits)
         
     }if(rang===2){
         score = "2";
         newJoke = new Joke(joke, score, date);
         reportAcudits.push(newJoke);
-        generateJoke();
+        randomJoke();
         console.log(reportAcudits)
     }
     if(rang===3){
         score = "3";
         newJoke = new Joke(joke, score, date);
         reportAcudits.push(newJoke);
-        generateJoke();
+        randomJoke();
         console.log(reportAcudits)
     }
 
     return score;
 }
-
-
+generateWeather ()
+async function generateWeather () {
+    const config = {
+         headers: {
+             'Accept': 'application/json' 
+         }
+     };
+     const res = await fetch ('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/41.3879,-2.16992?key=SK4ZJNLKNMRGCDP9TPLDAWHQ3', config);
+     const data = await res.json();
+    let weatherElement = <HTMLInputElement>document.getElementById("weather");
+    weatherElement.innerHTML = "Temperatura: " +  ((data.currentConditions.temp)- 32 * (5/9)).toFixed(0)+ "°";
+    return data.currentConditions.temp
+}
+async function generateJokeChuck () {
+    const config = {
+         headers: {
+             'Accept': 'application/json' 
+         }
+     };
+     const res = await fetch ('http://api.icndb.com/jokes/random', config);
+     const data = await res.json();
+    let jokeChuckElement = <HTMLInputElement>document.getElementById("joke");
+    jokeChuckElement.innerHTML = data.value.joke;
+    console.log(data.value.joke)
+    return data.value.joke
+}
+function randomJoke() {
+    let number:number = Math.random()*2;
+    if(number<1){
+        generateJokeChuck();
+    } else if(number>1){
+        generateJoke();
+    }
+}
 
 
 /*let url = 'https://icanhazdadjoke.com/slack';

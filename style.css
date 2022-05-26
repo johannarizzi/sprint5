@@ -51,9 +51,18 @@ h3 {
 
 }
 .btn:active {
-    transform: scale(0.98);
-    transition-duration: .50s;
+    transform: scale(1.1);
+    transition: transform 0.5s;
 }
 .btn:focus {
     outline: 0;
+}
+.star{
+    border: 0rem;
+    font-size: 1.8rem;
+    background-color: rgba(0,0,0,0.0) !important;
+}
+.star:hover{
+    transform: scale(1.5);
+    transition: transform 0.5s;
 }

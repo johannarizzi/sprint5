@@ -44,24 +44,63 @@ function loadScore(rang) {
         score = "1";
         newJoke = new Joke(joke, score, date);
         reportAcudits.push(newJoke);
-        generateJoke();
+        randomJoke();
         console.log(reportAcudits);
     }
     if (rang === 2) {
         score = "2";
         newJoke = new Joke(joke, score, date);
         reportAcudits.push(newJoke);
-        generateJoke();
+        randomJoke();
         console.log(reportAcudits);
     }
     if (rang === 3) {
         score = "3";
         newJoke = new Joke(joke, score, date);
         reportAcudits.push(newJoke);
-        generateJoke();
+        randomJoke();
         console.log(reportAcudits);
     }
     return score;
+}
+generateWeather();
+function generateWeather() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const config = {
+            headers: {
+                'Accept': 'application/json'
+            }
+        };
+        const res = yield fetch('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/41.3879,-2.16992?key=SK4ZJNLKNMRGCDP9TPLDAWHQ3', config);
+        const data = yield res.json();
+        let weatherElement = document.getElementById("weather");
+        weatherElement.innerHTML = "Temperatura: " + ((data.currentConditions.temp) - 32 * (5 / 9)).toFixed(0) + "°";
+        return data.currentConditions.temp;
+    });
+}
+function generateJokeChuck() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const config = {
+            headers: {
+                'Accept': 'application/json'
+            }
+        };
+        const res = yield fetch('http://api.icndb.com/jokes/random', config);
+        const data = yield res.json();
+        let jokeChuckElement = document.getElementById("joke");
+        jokeChuckElement.innerHTML = data.value.joke;
+        console.log(data.value.joke);
+        return data.value.joke;
+    });
+}
+function randomJoke() {
+    let number = Math.random() * 2;
+    if (number < 1) {
+        generateJokeChuck();
+    }
+    else if (number > 1) {
+        generateJoke();
+    }
 }
 /*let url = 'https://icanhazdadjoke.com/slack';
 fetch(url)
